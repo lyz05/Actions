@@ -25,7 +25,6 @@ jobs:
         uses: actions/checkout@master
       - run: |
           echo $GITHUB_WORKSPACE
-          echo $GITHUB_ACTION_PATH
 
       - name: Check out ServerDeploy repo
         uses: actions/checkout@v1
@@ -35,5 +34,4 @@ jobs:
           ref: master
       - run: |
           echo $GITHUB_WORKSPACE
-          echo $GITHUB_ACTION_PATH
 
