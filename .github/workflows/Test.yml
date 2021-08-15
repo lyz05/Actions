@@ -23,10 +23,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out this repo
         uses: actions/checkout@master
-        with:
-          path: ~/Actions
-      - run: |
-          cat ~/Actions/README.md
+
 
       - name: Check out ServerDeploy repo
         uses: actions/checkout@v1
@@ -34,6 +31,4 @@ jobs:
           repository: lyz05/ServerDeploy
           token: ${{ secrets.ACCESS_TOKEN }}
           ref: master
-          path: ~/ServerDeploy
-      - run: |
-          cat ~/ServerDeploy/README.md
+
