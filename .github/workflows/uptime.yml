@@ -36,14 +36,23 @@ jobs:
     # Runs a single command using the runners shell
     - name: Install Dependencies
       run: |
-        sudo apt-get install wireguard curl fping jq sshpass rclone
+        sudo apt-get install wireguard curl fping jq sshpass
         sudo cp ./wireguard/github.conf /etc/wireguard/tunnel.conf
 
-    - name: Test
+    - name: Exec uptime shell
       run: |
         wg-quick up tunnel
         ./shell/uptime.sh>uptime.html
         echo *****UptimeResult*****
         cat uptime.html
-        rclone --config ./rclone.conf copy uptime.html gd:/
         wg-quick down tunnel
+    
+    - uses: actions/checkout@v2
+    - name: Push Result
+      run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
