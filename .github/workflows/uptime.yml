@@ -1,0 +1,53 @@
+name: Intranet Uptime
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: 
+      - main
+  schedule:
+    - cron: '*/5 * * * *'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: Asia/Shanghai
+        
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Check out ServerDeploy repo
+      uses: actions/checkout@v2
+      with:
+        repository: lyz05/ServerDeploy
+        token: ${{ secrets.ACCESS_TOKEN }}
+        ref: master
+        
+    - name: Setup workspace
+      run: |
+        cd ../ServerDeploy
+    
+    # Runs a single command using the runners shell
+    - name: Install Dependencies
+      run: |
+        sudo apt-get install wireguard curl fping jq sshpass rclone
+        sudo cp ./wireguard/github.conf /etc/wireguard/tunnel.conf
+
+    - name: Test
+      run: |
+        wg-quick up tunnel
+        ./shell/uptime.sh>uptime.html
+        echo *****UptimeResult*****
+        cat uptime.html
+        rclone --config ./rclone.conf copy uptime.html gd:/
+        wg-quick down tunnel
