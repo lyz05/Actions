@@ -32,10 +32,6 @@ jobs:
         repository: lyz05/ServerDeploy
         token: ${{ secrets.ACCESS_TOKEN }}
         ref: master
-        
-    - name: Setup workspace
-      run: |
-        cd ../ServerDeploy
     
     # Runs a single command using the runners shell
     - name: Install Dependencies
