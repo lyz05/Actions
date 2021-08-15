@@ -44,7 +44,7 @@ jobs:
         wg-quick up tunnel
         ./shell/uptime.sh>../uptime.html
         echo *****UptimeResult*****
-        cat uptime.html
+        cat ../uptime.html
         wg-quick down tunnel
     
     - uses: actions/checkout@v2
