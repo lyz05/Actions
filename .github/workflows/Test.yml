@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          echo "$ACTION_DEPLOY_KEY"
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "294068487@qq.com"
