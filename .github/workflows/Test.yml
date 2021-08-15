@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,9 +21,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check out my other private repo
+      - name: Check out this repo
         uses: actions/checkout@master
-        with:
-          repository: orgname/reponame
-          token: ${{ secrets.my_pat }}
+
+      - name: Check out ServerDeploy repo
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "294068487@qq.com"
+          git config --global user.name "lyz05"
+          git clone git@github.com:lyz05/ServerDeploy.git
 
