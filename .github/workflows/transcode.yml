@@ -30,17 +30,23 @@ jobs:
           
 
       - name: Download video
+        env:
+          filename_in: gd:/Inbox/input.mp4
+          filename_out: ./input.mp4
         run: |
-          rclone --config ./rclone.conf copy gd:/Inbox/input.mp4 ./
+          rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
           
       - name: Transcode
         env:
           filename_in: ./input.mp4
           filename_out: ./output.mp4
         run: |
-          ffmpeg -i "$filename_in" -strict -2 -vcodec libx264 -preset veryslow -crf 23 -acodec aac -ac 2 -ar 48000 -ab 128k -f mp4 "$filename_out"
+          ffmpeg -i "$filename_in" -strict -2 -vcodec libx264 -preset fast -crf 32 -acodec aac -ac 2 -ar 48000 -ab 128k -f mp4 "$filename_out"
 
       - name: Upload video
+        env:
+          filename_in: ./output.mp4
+          filename_out: gd:/Inbox/output.mp4
         run: |
-          rclone --config ./rclone.conf copy ./output.mp4 gd:/Inbox/output.mp4
+          rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
       
