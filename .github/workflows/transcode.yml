@@ -32,7 +32,7 @@ jobs:
       - name: Download video
         env:
           filename_in: gd:/Inbox/input.mp4
-          filename_out: ./input.mp4
+          filename_out: ./
         run: |
           rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
           
@@ -46,7 +46,7 @@ jobs:
       - name: Upload video
         env:
           filename_in: ./output.mp4
-          filename_out: gd:/Inbox/output.mp4
+          filename_out: gd:/Inbox/
         run: |
           rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
       
