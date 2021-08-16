@@ -33,11 +33,11 @@ jobs:
         run: |
           rclone --config ./rclone.conf copy gd:/Inbox/input.mp4 ./
           
-     - name: Transcode
-       run: |
+      - name: Transcode
+        run: |
           ffmpeg -i input.mp4
       
-     - name: Upload video
+      - name: Upload video
         run: |
           rclone --config ./rclone.conf copy ./input.mp4 gd:/Inbox/output.mp4
       
