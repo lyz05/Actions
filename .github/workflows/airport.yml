@@ -35,4 +35,4 @@ jobs:
           mkdir SUB
           jq -r "to_entries|map(\"wget '\(.value|tostring)' -O SUB/\(.key)\")|.[]" suburl.json > down.sh
           bash down.sh
-          ossutil cp -rf oss://hkosslog/SUB ./SUB
+          ossutil cp -rf ./SUB oss://hkosslog/SUB 
