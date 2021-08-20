@@ -33,6 +33,6 @@ jobs:
         run: |
           ossutil cp oss://hkosslog/SUB/suburl.json ./suburl.json
           mkdir SUB
-          jq -r "to_entries|map(\"wget '\(.value|tostring)' -O SUB/\(.key) && ossutil cp -f SUB/\(.key) oss://hkosslog/SUB/\(.key)\")|.[]" suburl.json > down.sh
+          jq -r "to_entries|map(\"wget '\(.value|tostring)' -O SUB/\(.key) && ossutil cp --meta 'Content-Type:text/plain; charset=utf-8' -f SUB/\(.key) oss://hkosslog/SUB/\(.key)\")|.[]" suburl.json > down.sh
           bash down.sh
            
