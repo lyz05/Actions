@@ -26,6 +26,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install rclone ffmpeg x264
           
 
@@ -51,7 +52,7 @@ jobs:
               echo $filename_in $filename_out 
               fi
           done
-          
+
       - name: Upload video
         env:
           filename_in: ./transcode
