@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: lyz05/Sources
-           
+
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Run BTC Program
+      - name: Run IBITZH Program
         env:
           SCKEY: ${{ secrets.SCKEY }}
         run: |
