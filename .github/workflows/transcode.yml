@@ -30,33 +30,8 @@ jobs:
           sudo apt-get install rclone ffmpeg x264
           
 
-      - name: Download video
-        env:
-          filename_in: gd:/Inbox/transcode
-          filename_out: ./transcode
+      - name: Run shell
         run: |
-          rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
+          /bin/bash ./transcode.sh
           
-      - name: Transcode
-        env:
-          filename: ./transcode/*
-        run: |
-          for file in $filename
-          do
-              if test -f "$file"
-              then
-              filename_in="$file"
-              filename_out="${file%.*}_ffmpeg.mp4"
-              ffmpeg -i "$filename_in" -strict -2 -vcodec libx264 -preset fast -crf 28 -acodec aac -ac 2 -ar 48000 -ab 128k -f mp4 "$filename_out"
-              rm "$filename_in"
-              echo "$filename_in" "$filename_out"
-              fi
-          done
-
-      - name: Upload video
-        env:
-          filename_in: ./transcode
-          filename_out: gd:/Inbox/transcode
-        run: |
-          rclone --config ./rclone.conf copy "$filename_in" "$filename_out"
       
